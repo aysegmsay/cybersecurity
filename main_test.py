@@ -5,5 +5,4 @@ F1.print_entropy()
 F1.print_signature()
 F1.print_file_size()
 
-
-
+F1.print_file_name()
