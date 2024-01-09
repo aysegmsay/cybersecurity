@@ -2,6 +2,7 @@ import collections
 import math
 import binascii
 import re
+import os
 
 signature_list = "Signature_list.csv"
 
@@ -55,5 +56,9 @@ class FileClass:
     def print_file_size(self):
         print("File Size of the file:", self.get_file_size(), "bytes")
 
+    def get_file_name(self):
+        file_name = os.path.basename(self.file_path)
+        return file_name
 
-
+    def print_file_name(self):
+        print("File Name:", self.get_file_name())
