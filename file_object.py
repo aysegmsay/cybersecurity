@@ -2,6 +2,7 @@ import collections
 import math
 import binascii
 import re
+import hashlib
 import os
 
 signature_list = "Signature_list.csv"
@@ -13,6 +14,9 @@ class FileClass:
         self.context = self.read_file()
         self.entropy = self.calculate_entropy()
         self.signature = self.get_signature()
+        self.file_sha1 = self.calc_file_hash_sha1()
+        self.file_sha256 = self.calc_file_hash_sha256()
+        self.file_md5 = self.calc_file_hash_md5()
 
     def read_file(self):  # burda dosya okunuyor<3
         with open(self.file_path, 'rb') as file:
@@ -59,6 +63,40 @@ class FileClass:
     def get_file_name(self):
         file_name = os.path.basename(self.file_path)
         return file_name
+    def calc_file_hash_sha1(self):
+        file_sha1 = hashlib.new('sha1')
+        with open(self.file_path, 'rb') as file:
+            block = file.read(512)
+            while block:
+                file_sha1.update(block)
+                block = file.read(512)
+        return file_sha1.hexdigest()
+
+    def print_file_sha1(self):
+        print("SHA1:", self.calc_file_hash_sha1())
 
     def print_file_name(self):
         print("File Name:", self.get_file_name())
+    def calc_file_hash_sha256(self):
+        file_sha256 = hashlib.new('sha256')
+        with open(self.file_path, 'rb') as file:
+            block = file.read(512)
+            while block:
+                file_sha256.update(block)
+                block = file.read(512)
+        return file_sha256.hexdigest()
+
+    def print_file_sha256(self):
+        print("SHA256:", self.calc_file_hash_sha256())
+
+    def calc_file_hash_md5(self):
+        file_md5 = hashlib.new('md5')
+        with open(self.file_path, 'rb') as file:
+            block = file.read(512)
+            while block:
+                file_md5.update(block)
+                block = file.read(512)
+        return file_md5.hexdigest()
+
+    def print_file_md5(self):
+        print("MD5:", self.calc_file_hash_md5())
