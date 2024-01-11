@@ -7,5 +7,5 @@ F1.print_file_size()
 F1.print_file_md5()
 F1.print_file_sha1()
 F1.print_file_sha256()
-
 F1.print_file_name()
+F1.print_file_strings()

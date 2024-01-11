@@ -4,6 +4,7 @@ import binascii
 import re
 import hashlib
 import os
+import requests
 
 signature_list = "Signature_list.csv"
 
@@ -40,13 +41,13 @@ class FileClass:
         with open(self.file_path, 'rb') as file:
             signature_file = file.read()
             hex_dump = str((binascii.hexlify(signature_file)).upper())[2:-1]
-            with open(signature_list,'r') as s:
+            with open(signature_list, 'r') as s:
                 signatures = s.read()
                 s_list = re.split('\n|,', signatures)
                 signature = s_list[::2]
                 signature_type = s_list[1::2]
 
-        for i in range(0,len(signature)):
+        for i in range(0, len(signature)):
             if hex_dump[:len(signature[i])] == signature[i]:
                 return signature_type[i]
         return hex_dump
@@ -63,6 +64,7 @@ class FileClass:
     def get_file_name(self):
         file_name = os.path.basename(self.file_path)
         return file_name
+
     def calc_file_hash_sha1(self):
         file_sha1 = hashlib.new('sha1')
         with open(self.file_path, 'rb') as file:
@@ -77,6 +79,7 @@ class FileClass:
 
     def print_file_name(self):
         print("File Name:", self.get_file_name())
+
     def calc_file_hash_sha256(self):
         file_sha256 = hashlib.new('sha256')
         with open(self.file_path, 'rb') as file:
@@ -100,3 +103,18 @@ class FileClass:
 
     def print_file_md5(self):
         print("MD5:", self.calc_file_hash_md5())
+
+    def get_file_strings(self):
+        return self.context
+
+    def print_file_strings(self):
+        print("File Strings of the file:", self.get_file_strings())
+
+    def search_from_virus_total(self):
+        url = f"https://www.virustotal.com/api/v3/files/{self.file_md5}"
+        headers = {
+            "accept": "application/json",
+            "x-apikey": "0236ab3404b787b7ab0493ddf171b4ef8fe1196aebc3ac3c71d0cc7caf560dc6"
+        }
+        response = requests.get(url, headers=headers)
+        return response
