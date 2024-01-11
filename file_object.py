@@ -20,6 +20,7 @@ class FileClass:
         self.file_sha256 = self.calc_file_hash_sha256()
         self.file_md5 = self.calc_file_hash_md5()
 
+
     def read_file(self):  # burda dosya okunuyor<3
         with open(self.file_path, 'rb') as file:
             return file.read()
@@ -34,6 +35,15 @@ class FileClass:
             entropy -= probability * math.log2(probability)
 
         return entropy
+
+    def is_encrypted(self, entropy_threshold=5.0):
+        encrypted=True
+        non_encrypted=False
+        if self.calculate_entropy() > entropy_threshold:
+
+            return True# Şifrelenmiş
+        else:
+            return False  # Şifrelenmemiş
 
     def print_entropy(self):
         print("Entropy of the file:", self.calculate_entropy())
@@ -121,6 +131,8 @@ class FileClass:
         response = requests.get(url, headers=headers)
         return response
 
+
+
     def analyze_file(self):
         result_text = (
             f"File Name: {self.get_file_name()}\n"
@@ -132,6 +144,7 @@ class FileClass:
             f"MD5: {self.calc_file_hash_md5()}\n"
             f"file string: {self.get_file_strings()[:10]}\n"
             f"virustotal result : {self.search_from_virus_total()}\n"
+            f"encrypted possibility:{self.is_encrypted()}"
 
         )
         return result_text
