@@ -12,6 +12,7 @@ signature_list = "Signature_list.csv"
 class FileClass:
     def __init__(self, file_path):
         self.file_path = file_path
+        self.file_name = self.get_file_name()
         self.context = self.read_file()
         self.entropy = self.calculate_entropy()
         self.signature = self.get_signature()
@@ -62,8 +63,9 @@ class FileClass:
         print("File Size of the file:", self.get_file_size(), "bytes")
 
     def get_file_name(self):
-        file_name = os.path.basename(self.file_path)
-        return file_name
+        file_name_with_extension = os.path.basename(self.file_path)
+        file_name_without_extension, _ = os.path.splitext(file_name_with_extension)
+        return file_name_without_extension
 
     def calc_file_hash_sha1(self):
         file_sha1 = hashlib.new('sha1')
@@ -118,3 +120,18 @@ class FileClass:
         }
         response = requests.get(url, headers=headers)
         return response
+
+    def analyze_file(self):
+        result_text = (
+            f"File Name: {self.get_file_name()}\n"
+            f"File Size: {self.get_file_size()} bytes\n"
+            f"Entropy: {self.calculate_entropy()}\n"
+            f"Signature: {self.get_signature()}\n"
+            f"SHA1: {self.calc_file_hash_sha1()}\n"
+            f"SHA256: {self.calc_file_hash_sha256()}\n"
+            f"MD5: {self.calc_file_hash_md5()}\n"
+            f"file string: {self.get_file_strings()[:10]}\n"
+            f"virustotal result : {self.search_from_virus_total()}\n"
+
+        )
+        return result_text
