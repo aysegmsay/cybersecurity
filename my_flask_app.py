@@ -11,7 +11,7 @@ def upload_file(file_path):
 
 @app.route('/')
 def home():
-    return render_template('my_app.html')
+    return render_template('cyber.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_file_self():
