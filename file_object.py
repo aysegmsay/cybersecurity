@@ -122,14 +122,6 @@ class FileClass:
     def print_file_strings(self):
         print("File Strings of the file:", self.get_file_strings())
 
-    def search_from_virus_total(self):
-        url = f"https://www.virustotal.com/api/v3/files/{self.file_md5}"
-        headers = {
-            "accept": "application/json",
-            "x-apikey": "0236ab3404b787b7ab0493ddf171b4ef8fe1196aebc3ac3c71d0cc7caf560dc6"
-        }
-        response = requests.get(url, headers=headers)
-        return response
 
 
 
@@ -143,7 +135,6 @@ class FileClass:
             f"SHA256: {self.calc_file_hash_sha256()[:20]}\n"
             f"MD5: {self.calc_file_hash_md5()[:20]}\n"
             f"file string: {self.get_file_strings()[:10]}\n"
-            f"virustotal result : {self.search_from_virus_total()}\n"
             f"encrypted possibility:{self.is_encrypted()}"
 
         )
