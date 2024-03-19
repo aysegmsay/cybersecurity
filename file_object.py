@@ -126,7 +126,7 @@ class FileClass:
         url = f"https://www.virustotal.com/api/v3/files/{self.file_md5}"
         headers = {
             "accept": "application/json",
-
+            "x-apikey": "private key"
         }
         response = requests.get(url, headers=headers)
         return response
