@@ -23,11 +23,13 @@ for file_name in os.listdir(folder_path):
             file_entropy = file_instance.calculate_entropy()
             encrypted=file_instance.is_encrypted()
 
+
             # Append results to DataFrame
             result_df = result_df.append({
                 "file_name": file_name,
                 "entropy": file_entropy,
                 "encrypted":encrypted
+
             }, ignore_index=True)
         except Exception as e:
             print(f"Error processing file {file_path}: {e}")
